@@ -64,9 +64,9 @@ module Cmdv::Controllers
       render :list
     end
   end
-  class Feed < R '/feed.rss'
+  class Feed < R '/feed'
     def get
-      @headers['Content-type'] = 'application/rss+xml'
+      @headers['Content-Type'] = 'application/rss+xml'
       @pastes = Paste.find(:all, :order => 'created_at DESC', :limit => 10)
       render :feed
     end
@@ -128,7 +128,7 @@ end
 
 module Cmdv::Views
   def layout
-    if @headers['Content-type'] == 'application/rss+xml'
+    if @headers['Content-Type'] == 'application/rss+xml'
       self << yield 
     else
       
