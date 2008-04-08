@@ -64,7 +64,7 @@ module Cmdv::Controllers
       render :list
     end
   end
-  class Feed < R("/feed.rss")
+  class Feed < R '/feed.rss'
     def get
       @headers['Content-type'] = 'application/rss+xml'
       @pastes = Paste.find(:all, :order => 'created_at DESC', :limit => 10)
