@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
+# A minimal private pastie clone
+# (c) Jan Krutisch (jan.krutisch.de)
+# see README for Licensing information
+
 require 'rubygems'
 require 'camping'
 require 'camping/session'
