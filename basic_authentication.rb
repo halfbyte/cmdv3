@@ -47,6 +47,9 @@ module Camping #:nodoc:
     # your <tt>authenticate</tt> method returns false. See the module documentation how to
     # define your own <tt>authenticate</tt> method.
     def service(*a)
+      
+      puts "service"
+      
       @username, password = credentials
       app = self.class.name.gsub(/^(\w+)::.+$/, '\1')
       if Kernel.const_get(app).authenticate @username, password

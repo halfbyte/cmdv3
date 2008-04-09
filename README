@@ -1,0 +1,45 @@
+CMDv3 - Private pastie for the marses.
+(c) Jan Krutisch (jan.krutisch.de)
+
+Needs _why's camping + ActiveRecord + Builder
+
+*Usage*
+
+camping cmdv.rb
+
+*Authentication*
+
+Is atm done using Basic Auth, only the password is checked, username is used
+as a username for creating records (vla - very lightweight authenticatin).
+If you want to use a different password (the default is "foobar"), create a 
+file called config.yaml in the same directory and fill it like this:
+
+8< ----------- SNIP ----------- 8<
+---
+:password: myhypersecretpassword
+
+8< ----------- SNIP ----------- 8<
+
+*Issue Tracking*
+
+Bugtracking is done via ticgit for now.
+
+*Getting CMDv3
+
+Main Repo is http://github.com/halfbyte/cmdv3/tree
+
+*License*
+
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                   Version 2, December 2004
+ 
+Copyright (C) 2004 Sam Hocevar
+ 14 rue de Plaisance, 75014 Paris, France
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+ 
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ 
+ 0. You just DO WHAT THE FUCK YOU WANT TO.

@@ -4,6 +4,7 @@ require 'camping'
 require 'camping/session'
 require 'basic_authentication'
 require 'builder'
+require 'yaml'
 Camping.goes :Cmdv
 
 module Cmdv
@@ -11,9 +12,10 @@ module Cmdv
   include Camping::Session
   
   def authenticate(u, p)
-    p == 'towel'
+    p == Cmdv.config[:password]
   end
   module_function :authenticate
+  
 end
 
 module Cmdv::Models
@@ -60,6 +62,7 @@ end
 module Cmdv::Controllers
   class Index < R("/")
     def get
+      puts "get/index"
       @pastes = Paste.find(:all, :order => 'created_at DESC')
       render :list
     end
@@ -75,6 +78,14 @@ module Cmdv::Controllers
     def get(id)
       @paste = Paste.find(id)
       render :show
+    end
+  end
+  
+  class Delete < R '/delete(\d+)'
+    def post(id)
+      @paste = Paste.find(id)
+      @paste.destroy
+      redirect R(Index)
     end
   end
   
@@ -195,10 +206,11 @@ module Cmdv::Views
       self << @paste.user
       self << "(#{paste.created_at.to_s :short})"
     end
-    p do
+    form :action => R(Delete, @paste.id), :method => 'POST' do
       a :href => R(Edit, @paste.id) do
         img :src => R(Static, 'Images/edit.png'), :alt => 'Edit', :title => 'Edit this Paste'
       end
+      input :type => 'image', :src => R(Static, 'Images/delete.png'), :alt => 'Delete', :title => 'Delete this Paste', :onclick => 'return confirm("Really delete this Paste?")'
     end
     textarea :class => paste.lang, :name => 'code' do
       paste.body
@@ -276,7 +288,20 @@ module Cmdv::Views
   end
 end
 
+def Cmdv.config
+  @@config
+end
+
+def Cmdv.load_config
+  config_file_name = File.join(File.dirname(File.expand_path(__FILE__)), 'config.yml')
+  if File.exists?(config_file_name)
+    @@config = YAML.load_file(config_file_name)
+  else
+    @@config = {:password => 'foobar'}
+  end
+end
 def Cmdv.create
+  Cmdv.load_config
   Camping::Models::Session.create_schema
   Cmdv::Models.create_schema
 end
