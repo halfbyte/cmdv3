@@ -62,7 +62,6 @@ end
 module Cmdv::Controllers
   class Index < R("/")
     def get
-      puts "get/index"
       @pastes = Paste.find(:all, :order => 'created_at DESC')
       render :list
     end
